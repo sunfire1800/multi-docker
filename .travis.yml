@@ -3,16 +3,16 @@ services:
   - docker
 
 before_install:
-  - docker build -t sunfire1800/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t joefzhu/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true sunfire1800/react-test npm test -- --coverage
+  - docker run -e CI=true joefzhu/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t sunfire1800/multi-client ./client
-  - docker build -t sunfire1800/multi-nginx ./nginx
-  - docker build -t sunfire1800/multi-server ./server
-  - docker build -t sunfire1800/multi-sorker ./worker
+  - docker build -t joefzhu/multi-client ./client
+  - docker build -t joefzhu/multi-nginx ./nginx
+  - docker build -t joefzhu/multi-server ./server
+  - docker build -t joefzhu/multi-worker ./worker
 
 #Login to the docker CLI
 
@@ -20,7 +20,7 @@ after_success:
 
 #Take those inmages and push them to docker hub
 
-  - docker push sunfire1800/multi-client
-  - docker push sunfire1800/multi-nginx
-  - docker push sunfire1800/multi-server
-  - docker push sunfire1800/multi-worker
+  - docker push joefzhu/multi-client
+  - docker push joefzhu/multi-nginx
+  - docker push joefzhu/multi-server
+  - docker push joefzhu/multi-worker
