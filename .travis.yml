@@ -16,7 +16,7 @@ after_success:
 
 #Login to the docker CLI
 
-  - echo "$DOCKERPASSWORD" |docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" |docker login -u "$DOCKER_ID" --password-stdin
 
 #Take those inmages and push them to docker hub
 
