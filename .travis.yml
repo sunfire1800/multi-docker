@@ -1,0 +1,26 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t sunfire1800/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true sunfire1800/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t sunfire1800/multi-client ./client
+  - docker build -t sunfire1800/multi-nginx ./nginx
+  - docker build -t sunfire1800/multi-server ./server
+  - docker build -t sunfire1800/multi-sorker ./worker
+
+#Login to the docker CLI
+
+  - echo "$DOCKERPASSWORD" |docker login -u "$DOCKER_ID" --password-stdin
+
+#Take those inmages and push them to docker hub
+
+  - docker push sunfire1800/multi-client
+  - docker push sunfire1800/multi-nginx
+  - docker push sunfire1800/multi-server
+  - docker push sunfire1800/multi-worker
